@@ -22,15 +22,15 @@ namespace Home{
     }
 
     // Methods
-    std::string Lamp::lampID(){
+    std::string Lamp::lampID() const{
         return HouseName[static_cast<int>(deviceID.HouseCode)] + std::to_string(deviceID.UnitCode);
     }
 
-    void Lamp::print_lamp(){
+    void Lamp::print_lamp() const{
         std::cout << "Lamp(" << lampID() << ")\n";
     }
 
-    void Lamp::status(){
+    void Lamp::status() const{
         std::cout << "Lamp(" << lampID() << " is currently " << (state? "on" : "off") << ")\n";
     }
 
@@ -49,11 +49,11 @@ namespace Home{
         status();
     }
 
-    bool Lamp::is_on(){
+    bool Lamp::is_on() const{
         return state;
     }
 
-    std::pair<houseCode, short> Lamp::id(){
+    std::pair<houseCode, short> Lamp::id() const{
         return std::pair<houseCode, short> (deviceID.HouseCode, deviceID.UnitCode);
     }
 }

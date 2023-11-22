@@ -14,9 +14,9 @@ namespace Home{
         Lamp(houseCode HouseCode, short UnitCode, bool State);
 
         // Return lamp device ID in string format
-        std::string lampID();
-        void print_lamp();
-        void status();
+        std::string lampID() const;
+        void print_lamp() const;
+        void status() const;
         // ----- Setters -----
 
         void set_id(houseCode HouseCode, short UnitCode);
@@ -25,12 +25,16 @@ namespace Home{
 
         // ----- Getters -----
 
-        bool is_on();
-        std::pair<houseCode, short> id();
+        bool is_on() const;
+        std::pair<houseCode, short> id() const;
 
         // Destructor
         ~Lamp();
 
+        // Disable copy and assigment
+        // Lamp(Lamp const&)            = delete;
+        // Lamp& operator=(Lamp const&) = delete;
+        
     private:
         Device deviceID {houseCode::INVALID, 0};
         bool state {false};
