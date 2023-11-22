@@ -3,20 +3,38 @@
 
 #include <Device.h>
 
-namespace Home{
-    struct Lamp {
-        Device deviceID;
-        bool lampState;
+#include <string>
+
+namespace Home{  
+    class Lamp {
+    public:
+        // Constructors
+        Lamp();
+        Lamp(houseCode HouseCode, short UnitCode);
+        Lamp(houseCode HouseCode, short UnitCode, bool State);
+
+        // Return lamp device ID in string format
+        std::string lampID();
+        void print_lamp();
+        void status();
+        // ----- Setters -----
+
+        void set_id(houseCode HouseCode, short UnitCode);
+        void turnOn();
+        void turnOff();
+
+        // ----- Getters -----
+
+        bool is_on();
+        std::pair<houseCode, short> id();
+
+        // Destructor
+        ~Lamp();
+
+    private:
+        Device deviceID {houseCode::INVALID, 0};
+        bool state {false};
     };
-
-    // Output a Lamp's data:
-    void print_lamp(const Lamp& lamp);
-
-    // Sets the state of the lamp to be on
-    void lamp_on(Lamp& lamp);
-
-    // Sets the state of the lamp to be off
-    void lamp_off(Lamp& lamp);
 }
 
 #endif // LAMP_H

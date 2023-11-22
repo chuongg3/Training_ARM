@@ -1,26 +1,59 @@
 #include "Lamp.h"
 #include <iostream>
 
-
 namespace Home{
+    // Constructors
+    Lamp::Lamp(){
+        std::cout << "Created lamp instance with an Invalid device ID" << std::endl;
+    };
 
-    void print_lamp(const Lamp& lamp){
-        std::cout << "Lamp(" 
-            << HouseName[static_cast<int>(lamp.deviceID.HouseCode)] 
-            << std::to_string(lamp.deviceID.UnitCode) << ")\n";
+    Lamp::Lamp(houseCode hc, short uc) : deviceID {hc, uc} {
+        std::cout << "Created " << lampID() << ": In off state" << std::endl;
+    };
+
+    Lamp::Lamp(houseCode hc, short uc, bool State) : deviceID {hc, uc} , state {State} {
+        std::cout << "Created " << lampID() << ": In " << (State? "On" : "Off") << " state" << std::endl;
+    };
+
+    // Destructor
+    Lamp::~Lamp(){
+        state = false;
+        std::cout << "Deleting " << lampID() << ": In off state" << std::endl;
     }
 
-    // Sets the state of the lamp to be on
-    void lamp_on(Lamp& lamp){
-        lamp.lampState = true;
-        print_lamp(lamp);
-        printf("Lamp(%c%i) has been turned on\n", HouseName[static_cast<int>(lamp.deviceID.HouseCode)], lamp.deviceID.UnitCode);
+    // Methods
+    std::string Lamp::lampID(){
+        return HouseName[static_cast<int>(deviceID.HouseCode)] + std::to_string(deviceID.UnitCode);
     }
 
-    // Sets the state of the lamp to be off
-    void lamp_off(Lamp& lamp){
-        lamp.lampState = false;
-        print_lamp(lamp);
-        printf("Lamp(%c%i) has been turned off\n", HouseName[static_cast<int>(lamp.deviceID.HouseCode)], lamp.deviceID.UnitCode);
+    void Lamp::print_lamp(){
+        std::cout << "Lamp(" << lampID() << ")\n";
+    }
+
+    void Lamp::status(){
+        std::cout << "Lamp(" << lampID() << " is currently " << (state? "on" : "off") << ")\n";
+    }
+
+    void Lamp::set_id(houseCode hc, short uc){
+        deviceID.HouseCode = hc;
+        deviceID.UnitCode = uc;
+    }
+
+    void Lamp::turnOn(){
+        state = true;
+        status();
+    }
+
+    void Lamp::turnOff(){
+        state = false;
+        status();
+    }
+
+    bool Lamp::is_on(){
+        return state;
+    }
+
+    std::pair<houseCode, short> Lamp::id(){
+        return std::pair<houseCode, short> (deviceID.HouseCode, deviceID.UnitCode);
     }
 }
