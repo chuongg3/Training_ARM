@@ -27,11 +27,11 @@ namespace Home{
     }
 
     void Lamp::print_lamp() const{
-        std::cout << "Lamp(" << lampID() << ")\n";
+        std::cout << "Lamp (" << lampID() << ")\n";
     }
 
     void Lamp::status() const{
-        std::cout << "Lamp(" << lampID() << " is currently " << (state? "on" : "off") << ")\n";
+        std::cout << "Lamp (" << lampID() << ") is currently " << (state? "on" : "off") << "\n";
     }
 
     void Lamp::set_id(houseCode hc, short uc){

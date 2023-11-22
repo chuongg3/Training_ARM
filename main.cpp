@@ -1,6 +1,7 @@
 #include <iostream>
 #include <array>
 #include <Lamp.h>
+#include <Room.h>
 
 // #define PART_1
 #define PART_2
@@ -8,6 +9,7 @@
 #define PART_4
 
 using Home::Lamp;
+using Home::Room;
 
 constexpr unsigned size{ 10 };
 
@@ -51,10 +53,18 @@ Lamp make_lamp(houseCode hc, short uc){
 }
 
 int main(){
+    Room room("Room 1");
     Lamp study {houseCode::A, 0};
     study.turnOn();
-    lamp_status(study);
-    lamp_status(&study);
+    
+    room.add(study);
+    room.status();
+
+    Lamp bedLamp {houseCode::B, 1};
+    room.add(bedLamp);
+    room.status();
+    room.all_on();
+    room.status();
 
 }
 
