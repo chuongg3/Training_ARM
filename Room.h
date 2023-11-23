@@ -12,7 +12,7 @@ namespace Home{
             Room(std::string_view name);
             ~Room();
 
-            bool add(Module& module);
+            bool add(Switchable& module);
             void all_on();
             void all_off();
             void set_name(std::string_view new_name);
@@ -22,9 +22,9 @@ namespace Home{
 
         private:
             std::string name {};
-            std::array<Module* , 4> devices {};
+            std::array<Switchable* , 4> devices {};
 
-            std::array<Module* , 4>::iterator next = std::begin(devices);
+            std::array<Switchable* , 4>::iterator next = std::begin(devices);
     };
 }
 

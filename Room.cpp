@@ -13,7 +13,7 @@ namespace Home{
             std::cout << "Deleting room\n";
     }
 
-    bool Room::add(Module& newModule){
+    bool Room::add(Switchable& newModule){
         if (next == std::end(devices))
             return false;
         *next = &newModule;
@@ -24,11 +24,7 @@ namespace Home{
     void Room::all_on(){
         for (auto& module : devices){
             if (module){
-                
-                auto [HouseCode, UnitCode] = module->id();
-                if (HouseCode != houseCode::INVALID){
-                    module->turnOn();
-                }
+                module->turnOn();
             }
         }
     }
@@ -36,10 +32,7 @@ namespace Home{
     void Room::all_off(){
         for (auto& module : devices){
             if (module){
-                auto [HouseCode, UnitCode] = module->id();
-                if (HouseCode != houseCode::INVALID){
-                    module->turnOff();
-                }
+                module->turnOff();
             }
         }
     }
@@ -52,10 +45,7 @@ namespace Home{
         unsigned count = 0;
         for (auto* module : devices){
             if (module){
-                auto [HouseCode, UnitCode] = module->id();
-                if (module->is_on() == state && HouseCode != houseCode::INVALID){
-                    count++;
-                }
+                count++;
             }
         }
         return count;

@@ -4,9 +4,10 @@
 #include <Device.h>
 #include <iostream>
 #include <string>
+#include <Switchable.h>
 
 namespace Home{
-    class Module{
+    class Module : public Switchable{
     public:
         // Return lamp device ID in string format
         std::string printDeviceID() const;
@@ -15,11 +16,11 @@ namespace Home{
         // ----- Setters -----
         void set_id(houseCode HouseCode, short UnitCode);
         void set_state(bool new_state);
-        virtual void turnOn() = 0;
-        virtual void turnOff() = 0;
+        // virtual void turnOn() = 0;
+        // virtual void turnOff() = 0;
 
         // ----- Getters -----
-        bool is_on() const;
+        bool is_on() const override;
         std::pair<houseCode, short> id() const;
 
         virtual ~Module() = default;
