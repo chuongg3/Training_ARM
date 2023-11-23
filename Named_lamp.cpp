@@ -7,12 +7,12 @@ namespace Home {
     Named_lamp::Named_lamp(const char* Name, houseCode HouseCode, short UnitCode)
     :   Lamp {HouseCode, UnitCode},
         name {Name} {
-            std::cout << "Created " << lampID() << " with name " << Name << ": In off state" << std::endl;
+            std::cout << "Created " << printDeviceID() << " with name " << Name << ": In off state" << std::endl;
         }
     Named_lamp::Named_lamp(const char* Name, houseCode HouseCode, short UnitCode, bool State)
     :   Lamp {HouseCode, UnitCode, State},
         name {Name}{
-            std::cout << "Created " << lampID() << " with name " << Name << ": In " << (State? "On" : "Off") << " state" << std::endl;
+            std::cout << "Created " << printDeviceID() << " with name " << Name << ": In " << (State? "On" : "Off") << " state" << std::endl;
         }
 
     void Named_lamp::turnOn(){

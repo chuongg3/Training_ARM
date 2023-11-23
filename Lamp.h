@@ -2,42 +2,26 @@
 #define LAMP_H
 
 #include <Device.h>
+#include <Module.h>
 
 #include <string>
 
 namespace Home{  
-    class Lamp {
+    class Lamp : public Module{
     public:
         // Constructors
         Lamp();
         Lamp(houseCode HouseCode, short UnitCode);
         Lamp(houseCode HouseCode, short UnitCode, bool State);
 
-        // Return lamp device ID in string format
-        std::string lampID() const;
-        void print_lamp() const;
-        void status() const;
         // ----- Setters -----
+        virtual void turnOn() override;
+        virtual void turnOff() override;
 
-        void set_id(houseCode HouseCode, short UnitCode);
-        virtual void turnOn();
-        virtual void turnOff();
-
-        // ----- Getters -----
-
-        bool is_on() const;
-        std::pair<houseCode, short> id() const;
-
+        void print_lamp() const;
+        
         // Destructor
         ~Lamp();
-
-        // Disable copy and assigment
-        // Lamp(Lamp const&)            = delete;
-        // Lamp& operator=(Lamp const&) = delete;
-        
-    private:
-        Device deviceID {houseCode::INVALID, 0};
-        bool state {false};
     };
 }
 

@@ -6,6 +6,7 @@
 #include <Event.h>
 #include <EventList.h>
 #include <Named_lamp.h>
+#include <Appliance.h>
 
 // #define PART_1
 #define PART_2
@@ -14,12 +15,6 @@
 
 using Home::Lamp;
 using Home::Room;
-
-constexpr unsigned size{ 10 };
-
-void all_lamps_on(std::array<Lamp, size>& lamps);
-void all_lamps_off(std::array<Lamp, size>& lamps);
-unsigned count_lamps_on(std::array<Lamp, size>& lamps);
 
 // Lamp statuses
 #ifdef PART_1
@@ -60,48 +55,27 @@ int main(){
     Home::Named_lamp desk_lamp {"Desk", houseCode::A, 2 };
     Home::Named_lamp standard_lamp {"Standard", houseCode::A, 3 };
     Home::Named_lamp bedside_lamp {"Bedside", houseCode::B, 1 };
+    Home::Appliance bedside_appliance {houseCode::B, 1};
     Home::Room lounge { };
     desk_lamp.turnOn();
     lounge.add(desk_lamp);
+    
     lounge.add(standard_lamp);
+    
     Home::Room bedroom { };
+    
     bedroom.add(bedside_lamp);
+    
+    
+    bedroom.add(bedside_appliance);
+    bedside_appliance.turnOn();
+
     Timing::EventList events { };
     events.add_event(Timing::Instant { 00, 01 }, Timing::Instant { 00, 10 }, lounge);
-    events.add_event(Timing::Instant { 00, 05 },
-    Timing::Instant { 00, 10 }, bedroom);
+    events.add_event(Timing::Instant { 00, 05 }, Timing::Instant { 00, 10 }, bedroom);
     events.update_time(Timing::Instant {00,00});
     events.update_time(Timing::Instant {00,01});
     events.update_time(Timing::Instant {00,03});
     events.update_time(Timing::Instant {00,05});
     events.update_time(Timing::Instant {00,10});
-}
-
-void all_lamps_on(std::array<Lamp, size>& lamps)
-{
-    for (auto& lamp : lamps) {
-        if (lamp.id().first != houseCode::INVALID) { 
-            lamp.turnOn(); 
-        }
-    }
-}
-
-void all_lamps_off(std::array<Lamp, size>& lamps)
-{
-    for (auto& lamp : lamps) {
-        if (lamp.id().first != houseCode::INVALID) { 
-            lamp.turnOff(); 
-        }
-    }
-}
-
-unsigned count_lamps_on(std::array<Lamp, size>& lamps)
-{
-    unsigned count {};
-    for (auto& lamp : lamps) {
-        if (lamp.id().first != houseCode::INVALID && lamp.is_on()) {
-            ++count;
-        }
-    }
-    return count;
 }

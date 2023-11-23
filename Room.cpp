@@ -13,31 +13,33 @@ namespace Home{
             std::cout << "Deleting room\n";
     }
 
-    bool Room::add(Lamp& newLamp){
-        for (auto& lamp : devices){
-            auto [HouseCode, UnitCode] = lamp.id();
-            if (HouseCode == houseCode::INVALID){
-                lamp = newLamp;
-                return true;
-            }
-        }
-        return false;
+    bool Room::add(Module& newModule){
+        if (next == std::end(devices))
+            return false;
+        *next = &newModule;
+        ++next;
+        return true;
     }
 
     void Room::all_on(){
-        for (auto& lamp : devices){
-            auto [HouseCode, UnitCode] = lamp.id();
-            if (HouseCode != houseCode::INVALID){
-                lamp.turnOn();
+        for (auto& module : devices){
+            if (module){
+                
+                auto [HouseCode, UnitCode] = module->id();
+                if (HouseCode != houseCode::INVALID){
+                    module->turnOn();
+                }
             }
         }
     }
 
     void Room::all_off(){
-        for (auto& lamp : devices){
-            auto [HouseCode, UnitCode] = lamp.id();
-            if (HouseCode != houseCode::INVALID){
-                lamp.turnOff();
+        for (auto& module : devices){
+            if (module){
+                auto [HouseCode, UnitCode] = module->id();
+                if (HouseCode != houseCode::INVALID){
+                    module->turnOff();
+                }
             }
         }
     }
@@ -46,12 +48,14 @@ namespace Home{
         name = new_name;
     }
 
-    unsigned Room::count_lamp_state(bool state) const{
+    unsigned Room::count_module_state(bool state) const{
         unsigned count = 0;
-        for (auto& lamp : devices){
-            auto [HouseCode, UnitCode] = lamp.id();
-            if (lamp.is_on() == state && HouseCode != houseCode::INVALID){
-                count++;
+        for (auto* module : devices){
+            if (module){
+                auto [HouseCode, UnitCode] = module->id();
+                if (module->is_on() == state && HouseCode != houseCode::INVALID){
+                    count++;
+                }
             }
         }
         return count;
@@ -61,6 +65,6 @@ namespace Home{
         if (!name.empty()){
             std::cout << "In room <" << name << ">";
         }
-        std::cout << " there are currently " << std::to_string(count_lamp_state(true)) << " lamps on and " << std::to_string(count_lamp_state(false)) << " lamps off.\n";
+        std::cout << " there are currently " << std::to_string(count_module_state(true)) << " modules on and " << std::to_string(count_module_state(false)) << " modules off.\n";
     }
 }

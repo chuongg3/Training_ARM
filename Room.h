@@ -2,8 +2,8 @@
 #define ROOM_H
 
 #include <array>
-#include <Lamp.h>
 #include <string_view>
+#include <Module.h>
 
 namespace Home{
     class Room{
@@ -12,17 +12,19 @@ namespace Home{
             Room(std::string_view name);
             ~Room();
 
-            bool add(Lamp& lamp);
+            bool add(Module& module);
             void all_on();
             void all_off();
             void set_name(std::string_view new_name);
 
-            unsigned count_lamp_state(bool state) const;
+            unsigned count_module_state(bool state) const;
             void status() const;
 
         private:
             std::string name {};
-            std::array<Lamp, 4> devices {};
+            std::array<Module* , 4> devices {};
+
+            std::array<Module* , 4>::iterator next = std::begin(devices);
     };
 }
 
