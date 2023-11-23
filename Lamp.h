@@ -20,8 +20,8 @@ namespace Home{
         // ----- Setters -----
 
         void set_id(houseCode HouseCode, short UnitCode);
-        void turnOn();
-        void turnOff();
+        virtual void turnOn();
+        virtual void turnOff();
 
         // ----- Getters -----
 

@@ -5,6 +5,7 @@
 #include <Instant.h>
 #include <Event.h>
 #include <EventList.h>
+#include <Named_lamp.h>
 
 // #define PART_1
 #define PART_2
@@ -56,23 +57,24 @@ Lamp make_lamp(houseCode hc, short uc){
 }
 
 int main(){
-    Home::Lamp desk_lamp { houseCode::A, 2 };
-Home::Lamp standard_lamp { houseCode::A, 3 };
-Home::Lamp bedside_lamp { houseCode::B, 1 };
-Home::Room lounge { };
-lounge.add(desk_lamp);
-lounge.add(standard_lamp);
-Home::Room bedroom { };
-bedroom.add(bedside_lamp);
-Timing::EventList events { };
-events.add_event(Timing::Instant { 00, 01 }, Timing::Instant { 00, 10 }, lounge);
-events.add_event(Timing::Instant { 00, 05 },
-Timing::Instant { 00, 10 }, bedroom);
-events.update_time(Timing::Instant {00,00});
-events.update_time(Timing::Instant {00,01});
-events.update_time(Timing::Instant {00,03});
-events.update_time(Timing::Instant {00,05});
-events.update_time(Timing::Instant {00,10});
+    Home::Named_lamp desk_lamp {"Desk", houseCode::A, 2 };
+    Home::Named_lamp standard_lamp {"Standard", houseCode::A, 3 };
+    Home::Named_lamp bedside_lamp {"Bedside", houseCode::B, 1 };
+    Home::Room lounge { };
+    desk_lamp.turnOn();
+    lounge.add(desk_lamp);
+    lounge.add(standard_lamp);
+    Home::Room bedroom { };
+    bedroom.add(bedside_lamp);
+    Timing::EventList events { };
+    events.add_event(Timing::Instant { 00, 01 }, Timing::Instant { 00, 10 }, lounge);
+    events.add_event(Timing::Instant { 00, 05 },
+    Timing::Instant { 00, 10 }, bedroom);
+    events.update_time(Timing::Instant {00,00});
+    events.update_time(Timing::Instant {00,01});
+    events.update_time(Timing::Instant {00,03});
+    events.update_time(Timing::Instant {00,05});
+    events.update_time(Timing::Instant {00,10});
 }
 
 void all_lamps_on(std::array<Lamp, size>& lamps)
