@@ -4,11 +4,12 @@ namespace Timing{
     EventList::EventList(){}
 
     bool EventList::add_event(Instant on, Instant off, Room room){
-        if (next == std::end(eventlist))
+        try{
+            eventlist.push_back(std::make_unique<Event>(on, off, room));
+        }
+        catch (std::exception& e){
             return false;
-
-        *next = std::make_unique<Event>(on, off, room);
-        ++next;
+        }
         return true;
     }
 

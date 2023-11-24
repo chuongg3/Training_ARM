@@ -4,6 +4,7 @@
 #include <array>
 #include <string_view>
 #include <Module.h>
+#include <vector>
 
 namespace Home{
     class Room{
@@ -22,9 +23,8 @@ namespace Home{
 
         private:
             std::string name {};
-            std::array<Switchable* , 4> devices {};
-
-            std::array<Switchable* , 4>::iterator next = std::begin(devices);
+            using Container = std::vector<Switchable*>;
+            Container devices {};
     };
 }
 

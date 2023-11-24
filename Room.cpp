@@ -14,10 +14,12 @@ namespace Home{
     }
 
     bool Room::add(Switchable& newModule){
-        if (next == std::end(devices))
+        try{
+            devices.push_back(&newModule);
+        }
+        catch (std::exception& e){
             return false;
-        *next = &newModule;
-        ++next;
+        }
         return true;
     }
 
